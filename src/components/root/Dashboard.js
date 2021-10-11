@@ -8,7 +8,7 @@ export default class Dashboard extends Component {
     return (
       <div>
         <Row>
-          <Col xs="3">
+          <Col md="3" xs="2">
             <CategoryList></CategoryList>
           </Col>
           <Col xs="9">
