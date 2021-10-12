@@ -1,51 +1,31 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { Col, Row, Table } from "reactstrap";
+import { Col, Row, Table, Badge, Button } from "reactstrap";
 
 import { bindActionCreators } from "redux";
 import * as productActions from "../../redux/actions/productActions";
-
-import MUIDataTable from "mui-datatables";
-
-
-const columns = [
-    {
-     name: "productName",
-     label: "Product Name",
-     options: {
-      filter: true,
-      sort: true,
-     }
-    },
-    {
-     name: "quantityPerUnit",
-     label: "Quantity Per Unit",
-     options: {
-      filter: true,
-      sort: false,
-     }
-    },
-    {
-     name: "unitsInStock",
-     label: "Units In Stock",
-     options: {
-      filter: true,
-      sort: false,
-     }
-    }
-   ];
-   const options = {
-    //filterType: 'checkbox',
-  };
-
+import * as cartActions from "../../redux/actions/cartActions";
+import alertifyjs from "alertifyjs";
 class ProductList extends Component {
   componentDidMount() {
     this.props.getProducts();
   }
+
+  addToCart = (product) => {
+    this.props.addToCart({ quantity: 1, product });
+    alertifyjs.success(product.productName+" sepete eklendi");
+  };
   render() {
     return (
       <div>
-        <h1>Product List {this.props.currentCategory.categoryName}</h1>
+        <h1>
+          <Badge style={{ backgroundColor: "darkgrey" }}>
+            Product List
+            <Badge style={{ backgroundColor: "darkgreen" }}>
+              {this.props.currentCategory.categoryName}
+            </Badge>
+          </Badge>
+        </h1>
         <Row>
           <Col>
             <Table hover>
@@ -55,22 +35,30 @@ class ProductList extends Component {
                   <th>Product Name</th>
                   <th>Quantity Per Unit </th>
                   <th>Units In Stock</th>
+                  <th></th>
                 </tr>
               </thead>
               <tbody>
                 {this.props.products.map((product) => (
-                  <tr>
+                  <tr key={product.id}>
                     <th scope="row">{product.id}</th>
                     <td>{product.productName}</td>
                     <td>{product.quantityPerUnit}</td>
                     <td>{product.unitsInStock}</td>
+                    <td>
+                      <Button
+                        onClick={() => this.addToCart(product)}
+                        color="success"
+                      >
+                        Sepet'e Ekle
+                      </Button>
+                    </td>
                   </tr>
                 ))}
               </tbody>
             </Table>
           </Col>
         </Row>
-      
       </div>
     );
   }
@@ -86,6 +74,7 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
   return {
     getProducts: bindActionCreators(productActions.getProducts, dispatch),
+    addToCart: bindActionCreators(cartActions.addToCart, dispatch),
   };
 }
 

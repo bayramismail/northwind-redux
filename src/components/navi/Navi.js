@@ -13,6 +13,7 @@ import {
   DropdownItem,
   NavbarText,
 } from "reactstrap";
+import CartSummary from "../cart/CartSummary";
 
 const Navi = (props) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -20,8 +21,8 @@ const Navi = (props) => {
   const toggle = () => setIsOpen(!isOpen);
 
   return (
-    <div style={{margin:5}}>
-      <Navbar style={{padding:8}} color="primary" dark expand="md">
+    <div style={{ margin: 5 }}>
+      <Navbar style={{ padding: 8 }} color="primary" dark expand="md">
         <NavbarBrand href="/">reactstrap</NavbarBrand>
         <NavbarToggler onClick={toggle} />
         <Collapse isOpen={isOpen} navbar>
@@ -47,7 +48,9 @@ const Navi = (props) => {
             </UncontrolledDropdown>
           </Nav>
         </Collapse>
-        <NavbarText>Simple Text</NavbarText>
+        <Nav style={{marginRight:100}} className="ml-auto" navbar>
+          <CartSummary></CartSummary>
+        </Nav>
       </Navbar>
     </div>
   );
