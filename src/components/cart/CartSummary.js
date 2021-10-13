@@ -12,6 +12,7 @@ import {
 } from "reactstrap";
 import { bindActionCreators } from "redux";
 import * as cartActions from "../../redux/actions/cartActions";
+import { Link } from "react-router-dom";
 import alertify from "alertifyjs";
 class CartSummary extends Component {
   componentDidMount() {}
@@ -41,7 +42,7 @@ class CartSummary extends Component {
             </DropdownItem>
           ))}
           <DropdownItem divider></DropdownItem>
-          <DropdownItem>Sepete Git</DropdownItem>
+         <Link to={"/cart"} ><DropdownItem>Sepete Git</DropdownItem></Link>
         </DropdownMenu>
       </UncontrolledButtonDropdown>
     );
